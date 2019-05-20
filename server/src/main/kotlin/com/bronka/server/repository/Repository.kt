@@ -6,7 +6,7 @@ interface Repository<U,T>{
 
     fun createWithId(obj: U): Boolean
 
-    fun updateById(id: T): Boolean
+    fun updateById(id: T, v: U): Boolean
 
     fun dropById(id: T): Boolean
 

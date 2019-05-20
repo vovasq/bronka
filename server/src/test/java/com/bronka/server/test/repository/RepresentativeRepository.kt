@@ -1,16 +1,18 @@
-package com.bronka.server.repository
+package com.bronka.server.test.repository
 
-class ClientRepository<Client, String>: Repository<Client, String> {
+import com.bronka.server.data.Client
+import com.bronka.server.repository.Repository
+
+class RepresentativeRepository: Repository<Client, String> {
     override fun selectById(id: String): Client {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
     }
 
     override fun createWithId(obj: Client): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun updateById(id: String): Boolean {
+    override fun updateById(id: String, represent:Client): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

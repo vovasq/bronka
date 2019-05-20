@@ -4,7 +4,7 @@ import org.apache.log4j.*;
 
 public class JavaMain {
 
-    private final static Logger LOG= Logger.getLogger(JavaMain.class);;
+    private final static Logger LOG= Logger.getLogger(JavaMain.class);
 
     public static String javaSendToKotlin(){
         return "This Hello is sent from JAVA!";
