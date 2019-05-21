@@ -22,10 +22,7 @@ public class TestData {
 
     @Test
     public void createEnities() {
-        Restaurant restaurant = new Restaurant("restId1", "Blevotnya",
-                "very awesome resto", "de to tam" , "hohlyatskay", 0);
 
-        Assert.assertEquals("Blevotnya",restaurant.getName());
 
         Client client = new Client("clientId", "vovasq",
                 "password", "Vovas", "+123456789", "vovas@vovas.ru");
@@ -33,10 +30,7 @@ public class TestData {
 
         Visit visit = new Visit("visitId", "", VisitState.NEW, "", 3,
                 "Restoraunt", "client Name", "client id");
-
-
         LOG.info(visit);
-
 
     }
 

@@ -8,6 +8,7 @@ data class Visit(val id: String, val creatingTime: String, var state: VisitState
 enum class VisitState {
     NEW,
     IN_PROCESS,
+    DECLINED,
     APPROVED,
     END,
     CLOSED;

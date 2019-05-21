@@ -1,7 +1,7 @@
 package com.bronka.server.test;
 
 import com.bronka.server.data.Client;
-import com.bronka.server.test.repository.ClientRepository;
+import com.bronka.server.repository.ClientRepository;
 import com.bronka.server.repository.Repository;
 import org.junit.Before;
 import org.junit.Test;

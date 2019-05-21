@@ -1,9 +1,9 @@
-package com.bronka.server.test.repository
+package com.bronka.server.repository
 
 import com.bronka.server.data.Visit
-import com.bronka.server.repository.Repository
-import com.bronka.server.test.util.getCurrentTime
-import com.bronka.server.test.util.randState
+import com.bronka.server.data.VisitState
+import com.bronka.server.utils.getCurrentTime
+import com.bronka.server.utils.randState
 import org.apache.log4j.Logger
 
 class VisitRepository : Repository<Visit, String> {
@@ -28,6 +28,8 @@ class VisitRepository : Repository<Visit, String> {
         }
     }
 
+//    TODO exception for empty visits or something database
+
     fun createWithId(id: String): Boolean {
         val visit = Visit(id,
                 getCurrentTime(),
@@ -39,6 +41,10 @@ class VisitRepository : Repository<Visit, String> {
                 "clinet_$id")
         visits.put(id, visit)
         return true;
+    }
+
+    fun updateVisitState(id: String, state: VisitState){
+        selectById(id).state=state
     }
 
     override fun createWithId(obj: Visit): Boolean {
