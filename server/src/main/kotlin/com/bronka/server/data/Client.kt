@@ -3,16 +3,18 @@ package com.bronka.server.data
 import com.bronka.server.repository.RestaurantRepository
 import com.bronka.server.repository.VisitRepository
 import com.bronka.server.utils.getCurrentTime
+import org.springframework.beans.factory.annotation.Autowired
 
 class Client(id: String, login: String, password: String, name: String, phone: String, email: String) :
         UserAccount(id, login, password, name, phone, email) {
 
+    @Autowired
     private lateinit var restsRepo: RestaurantRepository
+    @Autowired
     private lateinit var visitsRepo: VisitRepository
 
     fun chooseRestAndRequest(restId: String, restName: String, bookingTime: String, numOfPersons: Int) {
-        requestVisit(
-                Visit(
+        requestVisit(Visit(
                 this.id + restId,
                 getCurrentTime(),
                 VisitState.NEW,

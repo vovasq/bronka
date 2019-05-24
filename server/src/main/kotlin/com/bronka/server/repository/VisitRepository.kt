@@ -50,7 +50,7 @@ class VisitRepository : Repository<Visit, String> {
     override fun createWithId(obj: Visit): Boolean {
         val visit = Visit(obj.id,
                 getCurrentTime(),
-                randState(),
+                VisitState.NEW,
                 getCurrentTime(),
                 2,
                 "restaurant $obj.id",
