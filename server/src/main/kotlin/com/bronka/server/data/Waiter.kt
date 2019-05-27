@@ -13,6 +13,14 @@ class Waiter(id: String, login: String, password: String, name: String, phone: S
         visitRepository.updateVisitState(id, VisitState.DECLINED)
     }
 
+    fun checkVisitsWithTime(time:String){
+        TODO()
+    }
+
+    fun approveVisit(id: String){
+        visitRepository.updateVisitState(id, VisitState.APPROVED)
+    }
+
     fun purposeNewVisit(){
 
     }

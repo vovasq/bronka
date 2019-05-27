@@ -13,6 +13,8 @@ class Client(id: String, login: String, password: String, name: String, phone: S
     @Autowired
     private lateinit var visitsRepo: VisitRepository
 
+
+
     fun chooseRestAndRequest(restId: String, restName: String, bookingTime: String, numOfPersons: Int) {
         requestVisit(Visit(
                 this.id + restId,
@@ -50,9 +52,12 @@ class Client(id: String, login: String, password: String, name: String, phone: S
         TODO()
     }
 
-    fun endVisit() {
+    fun endVisit(initialComment: Comment, rate:Rate,
+                 restaurant: Restaurant, client: Client) {
         TODO()
     }
+
+
 }
 
 

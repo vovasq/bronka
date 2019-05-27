@@ -1,4 +1,4 @@
-package com.bronka.server.test.booking
+package com.bronka.server.test.workflow
 
 import com.bronka.server.data.Client
 import com.bronka.server.data.Waiter

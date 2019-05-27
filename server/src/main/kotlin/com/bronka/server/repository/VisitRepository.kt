@@ -17,7 +17,7 @@ class VisitRepository : Repository<Visit, String> {
         } else {
             val visit = Visit(id,
                     getCurrentTime(),
-                    randState(),
+                    VisitState.NEW,
                     getCurrentTime(),
                     2,
                     "restaurant $id",
@@ -45,9 +45,14 @@ class VisitRepository : Repository<Visit, String> {
 
     fun updateVisitState(id: String, state: VisitState){
         selectById(id).state=state
+        if (state.equals(VisitState.DECLINED)){
+            dropById(id)
+        }
     }
 
     override fun createWithId(obj: Visit): Boolean {
+//        TODO: check if user have already created  visit with status new or
+//         in proccess in the same restaurant
         val visit = Visit(obj.id,
                 getCurrentTime(),
                 VisitState.NEW,
