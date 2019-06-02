@@ -1,6 +1,6 @@
 package com.bronka.server.repository
 
-import com.bronka.server.data.Feedback
+import com.bronka.server.entity.Feedback
 import org.apache.log4j.Logger
 
 class FeedbackRepository : Repository<Feedback, String> {

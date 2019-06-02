@@ -1,6 +1,10 @@
 package com.bronka.server.service
 
-import com.bronka.server.data.*
+import com.bronka.server.entity.Feedback
+import com.bronka.server.users.*
+import com.bronka.server.entity.UserAccount
+import com.bronka.server.entity.Visit
+import com.bronka.server.entity.VisitState
 import com.bronka.server.repository.Repository
 import org.apache.log4j.Logger
 
@@ -36,11 +40,11 @@ class ClientService (private var repository: Repository<Client, String>){
         return true;
     }
 
-    fun getStateOfVisit(clientId: String, visitId:Visit): Visit{
+    fun getStateOfVisit(clientId: String, visitId: Visit): Visit {
         LOG.debug("+getStateOfVisit $visitId for user $clientId")
 
         LOG.debug("-getStateOfVisit $visitId for user $clientId")
-        return Visit("","", VisitState.NEW, "",
+        return Visit("", "", VisitState.NEW, "",
                 3, "rere", "dsdas", "sasd");
     }
 

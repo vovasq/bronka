@@ -1,5 +1,6 @@
-package com.bronka.server.data
+package com.bronka.server.users
 
+import com.bronka.server.entity.*
 import com.bronka.server.repository.RestaurantRepository
 import com.bronka.server.repository.VisitRepository
 import com.bronka.server.utils.getCurrentTime
@@ -12,8 +13,6 @@ class Client(id: String, login: String, password: String, name: String, phone: S
     private lateinit var restsRepo: RestaurantRepository
     @Autowired
     private lateinit var visitsRepo: VisitRepository
-
-
 
     fun chooseRestAndRequest(restId: String, restName: String, bookingTime: String, numOfPersons: Int) {
         requestVisit(Visit(
@@ -52,7 +51,7 @@ class Client(id: String, login: String, password: String, name: String, phone: S
         TODO()
     }
 
-    fun endVisit(initialComment: Comment, rate:Rate,
+    fun endVisit(initialComment: Comment, rate: Rate,
                  restaurant: Restaurant, client: Client) {
         TODO()
     }

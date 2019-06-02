@@ -1,9 +1,7 @@
 package com.bronka.server.repository
 
-import com.bronka.server.data.Category
-import com.bronka.server.data.Restaurant
-import com.bronka.server.utils.getCurrentTime
-import com.bronka.server.utils.randState
+import com.bronka.server.entity.Category
+import com.bronka.server.entity.Restaurant
 import org.apache.log4j.Logger
 
 class RestaurantRepository : Repository<Restaurant, String> {

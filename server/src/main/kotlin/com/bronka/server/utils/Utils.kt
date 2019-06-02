@@ -1,6 +1,6 @@
 package com.bronka.server.utils
 
-import com.bronka.server.data.VisitState
+import com.bronka.server.entity.VisitState
 import java.text.SimpleDateFormat
 import java.util.*
 

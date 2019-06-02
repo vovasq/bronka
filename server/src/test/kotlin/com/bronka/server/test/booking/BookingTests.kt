@@ -1,11 +1,13 @@
 package com.bronka.server.test
 
-import com.bronka.server.data.*
+import com.bronka.server.users.*
+import com.bronka.server.entity.Comment
+import com.bronka.server.entity.Visit
+import com.bronka.server.entity.VisitState
 import com.bronka.server.repository.RestaurantRepository
 import com.bronka.server.repository.VisitRepository
 import com.bronka.server.test.workflow.BookingTestsConfig
 import com.bronka.server.utils.getCurrentTime
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,13 +32,11 @@ class BookingTests {
     @Autowired
     private lateinit var visitRepository: VisitRepository
 
-
     private fun createVisit(restId: String): Visit {
         restRepo.createWithId(restId)
-        client.chooseRestAndRequest(restId,"pohi", getCurrentTime(),5)
-        return  visitRepository.selectById(client.id+restId)
+        client.chooseRestAndRequest(restId, "pohi", getCurrentTime(), 5)
+        return visitRepository.selectById(client.id + restId)
     }
-
 
     @Test
     fun createClientTest() {
@@ -44,31 +44,30 @@ class BookingTests {
     }
 
     @Test
-    fun createVisitTest(){
+    fun createVisitTest() {
         val restId = "restid_1"
         val visit = createVisit(restId)
         assertEquals(visit.state, VisitState.NEW)
     }
 
     @Test
-    fun createVisitAndDeclineTest(){
+    fun createVisitAndDeclineTest() {
         val restId = "restid_1"
         val visit = createVisit(restId)
         waiter.declineVisit(visit.id, Comment("com",
-                13232, "fdsmkldsfnlkdsmfklmdslkmf","dnjkdsa","ndjfnsdfsdk"))
+                13232, "fdsmkldsfnlkdsmfklmdslkmf", "dnjkdsa", "ndjfnsdfsdk"))
         assertEquals(visit.state, VisitState.DECLINED)
         // after declined action it should not be this visit in repo
         assertEquals(visitRepository.selectById(visit.id).state, VisitState.NEW)
     }
 
     @Test
-    fun createVisitAndApproveTest(){
+    fun createVisitAndApproveTest() {
         val restId = "restid_1"
         val visit = createVisit(restId)
         assertEquals(visit.state, VisitState.NEW)
 //        createVisit()
     }
-
 
 
 }

@@ -1,6 +1,8 @@
-package com.bronka.server.data
+package com.bronka.server.entity
 
-data class Feedback(val initialComment: Comment, val rate:Rate,
+import com.bronka.server.users.Client
+
+data class Feedback(val initialComment: Comment, val rate: Rate,
                     val restaurant: Restaurant, val client: Client)
 
 enum class Rate{

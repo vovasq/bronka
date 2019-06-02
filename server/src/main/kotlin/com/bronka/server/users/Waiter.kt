@@ -1,5 +1,8 @@
-package com.bronka.server.data
+package com.bronka.server.users
 
+import com.bronka.server.entity.Comment
+import com.bronka.server.entity.UserAccount
+import com.bronka.server.entity.VisitState
 import com.bronka.server.repository.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -9,7 +12,7 @@ class Waiter(id: String, login: String, password: String, name: String, phone: S
     @Autowired
     private lateinit var visitRepository: VisitRepository
 
-    fun declineVisit(id:String, comment:Comment) {
+    fun declineVisit(id:String, comment: Comment) {
         visitRepository.updateVisitState(id, VisitState.DECLINED)
     }
 

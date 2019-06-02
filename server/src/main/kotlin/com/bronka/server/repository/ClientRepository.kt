@@ -1,7 +1,6 @@
 package com.bronka.server.repository
 
-import com.bronka.server.data.Client
-import com.bronka.server.repository.Repository
+import com.bronka.server.users.Client
 
 class ClientRepository: Repository<Client, String> {
     val clients: HashMap<String,Client> = HashMap<String,Client>()

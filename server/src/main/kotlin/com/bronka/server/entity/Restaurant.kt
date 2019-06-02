@@ -1,4 +1,4 @@
-package com.bronka.server.data
+package com.bronka.server.entity
 
 import org.apache.log4j.Logger
 
@@ -9,8 +9,5 @@ data class Restaurant(val id: String, var name:String,
         val LOG = Logger.getLogger(Restaurant::class.java)
         LOG.info("Created new Restaurant name = $name with id = $id")
     }
-
-
-
 
 }

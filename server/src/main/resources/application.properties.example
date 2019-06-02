@@ -1,0 +1,20 @@
+#this file is example of propeties of application
+#create file application.properties in the same folder copy strings below
+#and fill according to server settings
+#STORE IT LOCALLY AND DO NOT ADD IT TO VERSION CONTROL
+
+server.port=7777
+
+# set up data source
+spring.datasource.hikari.connectionTimeout=20000
+spring.datasource.hikari.maximumPoolSize=5
+spring.datasource.url=jdbc:postgresql://127.0.0.1:port/db_name
+spring.datasource.username=username
+spring.datasource.password=password
+
+#drop n create table again, good for testing, comment this in production
+#spring.jpa.hibernate.ddl-auto=create
+
+spring.jpa.show-sql=true
+
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false

@@ -1,7 +1,7 @@
 package com.bronka.server.test.workflow
 
-import com.bronka.server.data.Client
-import com.bronka.server.data.Waiter
+import com.bronka.server.users.Client
+import com.bronka.server.users.Waiter
 import com.bronka.server.repository.RestaurantRepository
 import com.bronka.server.repository.VisitRepository
 import com.bronka.server.utils.getNextClientId

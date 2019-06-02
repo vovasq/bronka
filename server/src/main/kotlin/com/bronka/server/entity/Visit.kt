@@ -1,4 +1,4 @@
-package com.bronka.server.data
+package com.bronka.server.entity
 
 data class Visit(val id: String, val creatingTime: String, var state: VisitState,
                  var bookingTime: String?, var numOfPersons: Int,

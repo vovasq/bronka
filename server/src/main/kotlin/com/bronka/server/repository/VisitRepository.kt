@@ -1,7 +1,7 @@
 package com.bronka.server.repository
 
-import com.bronka.server.data.Visit
-import com.bronka.server.data.VisitState
+import com.bronka.server.entity.Visit
+import com.bronka.server.entity.VisitState
 import com.bronka.server.utils.getCurrentTime
 import com.bronka.server.utils.randState
 import org.apache.log4j.Logger

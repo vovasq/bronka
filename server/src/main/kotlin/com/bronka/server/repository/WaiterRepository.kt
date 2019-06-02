@@ -1,6 +1,6 @@
 package com.bronka.server.repository
 
-import com.bronka.server.data.Waiter
+import com.bronka.server.users.Waiter
 
 class WaiterRepository: Repository<Waiter, String>{
     override fun selectById(id: String): Waiter {
