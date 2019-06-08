@@ -1,11 +1,15 @@
 package com.bronka.server.controller
 
+import com.bronka.server.entity.Restaurant
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
 class BronkaController {
+
     @GetMapping("alive")
     fun alive():String{
         return """
@@ -17,6 +21,12 @@ class BronkaController {
             |I've been gone since, like, July, niggas actin' like I died<br>
             |They won't be expectin' shit when Capo go to slide (hah)<br>
             |Cause I told them that we put that shit behind us but I— (hah)<br>""".trimMargin("|")
+    }
+
+    @GetMapping("resto")
+//    @RequestParam(required = true)id: Long
+    fun getRestsList():List<Restaurant> {
+        TODO()
     }
 
 }

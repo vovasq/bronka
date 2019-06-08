@@ -1,52 +1,18 @@
 package com.bronka.server.service
 
-import com.bronka.server.entity.Feedback
-import com.bronka.server.users.*
 import com.bronka.server.entity.UserAccount
-import com.bronka.server.entity.Visit
-import com.bronka.server.entity.VisitState
-import com.bronka.server.repository.Repository
+import com.bronka.server.repository.UserRepositoryJpa
 import org.apache.log4j.Logger
+import org.springframework.beans.factory.annotation.Autowired
 
-class ClientService (private var repository: Repository<Client, String>){
+class ClientService{
 
     private val LOG = Logger.getLogger(UserAccount::class.java)
 
-    fun createVisit(clientId:String, visit: Visit):Boolean{
-        LOG.debug("+createVisit $visit for user $clientId")
+    @Autowired
+    private lateinit var userRepo: UserRepositoryJpa
 
-        LOG.debug("-createVisit $visit for user $clientId")
-        return true;
-    }
 
-    fun closeVisit(clientId:String, visitId: String):Boolean{
-        LOG.debug("+closeVisit $visitId for user $clientId")
-
-        LOG.debug("-closeVisit $visitId for user $clientId")
-        return true;
-    }
-
-    fun modifyVisit(clientId:String, prevVisitId: String, newVisit: Visit): Boolean{
-        LOG.debug("+modifyVisit $prevVisitId for user $clientId")
-
-        LOG.debug("-modifyVisit $prevVisitId for user $clientId")
-        return true;
-    }
-
-    fun leaveFeedback(clientId:String, feedback: Feedback): Boolean{
-        LOG.debug("+leaveFeedback $feedback for user $clientId")
-
-        LOG.debug("-leaveFeedback $feedback for user $clientId")
-        return true;
-    }
-
-    fun getStateOfVisit(clientId: String, visitId: Visit): Visit {
-        LOG.debug("+getStateOfVisit $visitId for user $clientId")
-
-        LOG.debug("-getStateOfVisit $visitId for user $clientId")
-        return Visit("", "", VisitState.NEW, "",
-                3, "rere", "dsdas", "sasd");
-    }
 
 
 

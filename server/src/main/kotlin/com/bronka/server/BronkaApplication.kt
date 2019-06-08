@@ -14,6 +14,10 @@ open class BronkaApplication  {
     @Autowired
     private lateinit var repository: BookRepository
 
+//    @Autowired
+//    private lateinit var userRepo: UserRepositoryJpa
+
+
     @PostConstruct
     fun run() {
 

@@ -1,13 +1,27 @@
 package com.bronka.server.entity
 
-import org.apache.log4j.Logger
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
-data class Restaurant(val id: String, var name:String,
-                 var description: String, var location: String,
-                 var cousine: String,  var rate: Int, var categories:List<Category>) {
-    init {
-        val LOG = Logger.getLogger(Restaurant::class.java)
-        LOG.info("Created new Restaurant name = $name with id = $id")
+
+@Entity
+data class Restaurant(
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        var id: Long?,
+
+        var name: String,
+        var description: String,
+        var location: String,
+        var cousine: String,
+        var rate: Int
+//        var categories: List<Category>
+) {
+    override fun toString(): String {
+        return "Restaurant(id=$id, name='$name', description='$description', location='$location', cousine='$cousine', rate=$rate)"
     }
 
 }

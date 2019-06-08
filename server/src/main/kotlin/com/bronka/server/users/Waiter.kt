@@ -2,32 +2,35 @@ package com.bronka.server.users
 
 import com.bronka.server.entity.Comment
 import com.bronka.server.entity.UserAccount
-import com.bronka.server.entity.VisitState
-import com.bronka.server.repository.VisitRepository
+import com.bronka.server.repository.VisitRepositoryJpa
 import org.springframework.beans.factory.annotation.Autowired
 
-class Waiter(id: String, login: String, password: String, name: String, phone: String, email: String) :
-        UserAccount(id, login, password, name, phone, email) {
+class Waiter(userAccount: UserAccount) {
 
     @Autowired
-    private lateinit var visitRepository: VisitRepository
+    private lateinit var visitRepository: VisitRepositoryJpa
 
-    fun declineVisit(id:String, comment: Comment) {
-        visitRepository.updateVisitState(id, VisitState.DECLINED)
+    fun declineVisit(id: String, comment: Comment) {
+        TODO()
+//        visitRepository.updateVisitState(id, VisitState.DECLINED)
     }
 
-    fun checkVisitsWithTime(time:String){
+    fun checkVisitsWithTime(time: String) {
         TODO()
     }
 
-    fun approveVisit(id: String){
-        visitRepository.updateVisitState(id, VisitState.APPROVED)
+    fun approveVisit(id: String) {
+        TODO()
+//        visitRepository.updateVisitState(id, VisitState.APPROVED)
     }
 
-    fun purposeNewVisit(){
+    fun purposeNewVisit() {
+        TODO()
 
     }
 
-    fun getNewVisits(){}
+    fun getNewVisits() {
+        TODO()
+    }
 
 }
