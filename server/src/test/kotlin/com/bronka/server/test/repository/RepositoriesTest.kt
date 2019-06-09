@@ -46,6 +46,8 @@ open class RepositoriesTest {
     private var clientName = "Vovas"
     private val restaurantName = "RESTIK"
     private val text = "perfect visit jdjksfndsk"
+    private val email = "vovvas@amil.ru"
+
 
     @Before
     fun initTestEntities() {
@@ -67,7 +69,7 @@ open class RepositoriesTest {
 
 //                listOf(Category("GOOD FOOD", "really goood"), Category("Street Food", "street food")))
         client = Client(UserAccount(null, "client", clientName, "vovasName",
-                "password", "+75748574385", "vovvas@amil.ru"))
+                "password", "+75748574385", email))
 
 
     }
@@ -76,6 +78,7 @@ open class RepositoriesTest {
     fun userRepoTest() {
         userRepo.save(client.userAccount)
         assertEquals(userRepo.findByName(clientName).size, 1)
+        assertTrue(userRepo.findByEmail(email).isNotEmpty())
         client = Client(userRepo.findByName(clientName).get(0))
     }
 

@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class UserRepository : UserRepositoryJpa {
+abstract class UserRepository : UserRepositoryJpa {
     private val clients: HashMap<String, UserAccount> = HashMap<String, UserAccount>()
     private val idToNameMap: HashMap<Long, String> = HashMap<Long, String>()
     private var idCounter:Long = 0

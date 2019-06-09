@@ -1,0 +1,24 @@
+input {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+}
+
+form {
+    width: 25%;
+    align-self: center;
+    align-items: center;
+    margin: 3% auto auto;
+
+}
+
+
+
+/*.center {*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    margin: auto;*/
+/*}*/
