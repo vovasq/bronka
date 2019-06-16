@@ -9,7 +9,7 @@ data class Feedback(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")
-        val id: Long?,
+        var id: Long?,
 
         @ManyToOne(cascade = arrayOf(CascadeType.ALL))
 //        @JoinTable(name = "feed_comment",

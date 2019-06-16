@@ -7,5 +7,4 @@ interface VisitRepositoryJpa :JpaRepository<Visit, Long> {
     fun findByClientId(clientId: Long): List<Visit>
     fun findByClientName(clientName: String): List<Visit>
     fun findByRestaurant(restaurant: String): List<Visit>
-
 }

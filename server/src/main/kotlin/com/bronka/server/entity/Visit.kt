@@ -7,7 +7,7 @@ import javax.persistence.*
 data class Visit(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long?,
+        var id: Long?,
         val creatingTime: String,
         var state: VisitState,
         var bookingTime: String?,
@@ -25,6 +25,7 @@ enum class VisitState {
     IN_PROCESS,
     DECLINED,
     APPROVED,
+    MISSED,
     END,
     CLOSED;
 }

@@ -1,4 +1,4 @@
-var userId =0;
+var userId = 0;
 
 $(document).ready(function () {
     // val for determine login or register action
@@ -33,34 +33,23 @@ $(document).ready(function () {
         if (isLogin) {
             data['email'] = $('#idInputEmail').val();
             data['password'] = $('#inputPasswordId').val();
-            console.log(data);
             $.ajax({
                 method: "GET",
                 url: "/login",
                 data: data
             })
                 .done(function (msg) {
-                    if (msg['id']== null || msg['id'] == undefined)
+                    if (  msg['id']== null || msg['id'] == undefined)
                         alert('Wrong Login or Password');
 
                     else {
                         console.log("res = " + msg['id']);
                         userId=msg['id'];
-
                         $('#regFormId').remove();
                         $('#titleId').html('Welcome To Bronka!');
+                        loadRestCards();
                     }
                 });
-
-            // $.get("/login",
-            //     data,
-            //     function (result) {
-            //         if (result == null || result == undefined)
-            //             alert('Wrong Login or Password');
-            //         else {
-            //             console.log("res = " + result['id']);
-            //         }
-            //     });
         } else {
             data['email'] = $('#idInputEmail').val();
             data['password'] = $('#inputPasswordId').val();
@@ -70,9 +59,7 @@ $(document).ready(function () {
             data['login'] = $('#idInputLogin').val();
             for (key in data) {
                 var entry = data[key];
-                if (entry == "")
-                // || entry == undefined || entry == null)
-                {
+                if (entry == "") {
                     alert("Please fill all inputs!!");
                     return;
                 }
@@ -91,12 +78,6 @@ $(document).ready(function () {
                 .done(function (msg) {
                     alert("Id is " + msg['id']);
                 });
-
-            // $.post("/signup",
-            //     data,
-            //     function (result) {
-            //         console.log("success!!! id = " + result['id'])
-            //     });
         }
     });
     //
@@ -109,6 +90,121 @@ $(document).ready(function () {
     // });
     // var data = ;
 });
+
+
+function loadRestaurants() {
+    var initHtml = '<div class="container mt-3">\n' +
+        '  <h2>Filterable Table</h2>\n' +
+        '  <p>Type something in the input field to search the table for first names, last names or emails:</p>  \n' +
+        '  <input class="form-control" id="myInput" type="text" placeholder="Search..">\n' +
+        '  <br>\n' +
+        '  <table class="table table-bordered">\n' +
+        '    <thead>\n' +
+        '      <tr>\n' +
+        '        <th>Firstname</th>\n' +
+        '        <th>Lastname</th>\n' +
+        '        <th>Email</th>\n' +
+        '      </tr>\n' +
+        '    </thead>\n' +
+        '    <tbody id="myTable">\n' +
+        '      <tr>\n' +
+        '        <td>John</td>\n' +
+        '        <td>Doe</td>\n' +
+        '        <td>john@example.com</td>\n' +
+        '      </tr>\n' +
+        '      <tr>\n' +
+        '        <td>Mary</td>\n' +
+        '        <td>Moe</td>\n' +
+        '        <td>mary@mail.com</td>\n' +
+        '      </tr>\n' +
+        '      <tr>\n' +
+        '        <td>July</td>\n' +
+        '        <td>Dooley</td>\n' +
+        '        <td>july@greatstuff.com</td>\n' +
+        '      </tr>\n' +
+        '      <tr>\n' +
+        '        <td>Anja</td>\n' +
+        '        <td>Ravendale</td>\n' +
+        '        <td>a_r@test.com</td>\n' +
+        '      </tr>\n' +
+        '    </tbody>\n' +
+        '  </table>\n' +
+        '  \n' +
+        '  <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>\n' +
+        '</div>\n';
+    $('#titleId').after(initHtml);
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+}
+
+function loadRestCards() {
+    // var initHtml = '<div class="card-deck">\n' +
+    //     '  <div class="card">\n' +
+    //     '    <img class="card-img-top" src="../static/images/1.jpg" alt="Card image cap">\n' +
+    //     '    <div class="card-body">\n' +
+    //     '      <h5 class="card-title">Card title</h5>\n' +
+    //     '      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>\n' +
+    //     '    </div>\n' +
+    //     '    <div class="card-footer">\n' +
+    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
+    //     '    </div>\n' +
+    //     '  </div>\n' +
+    //     '  <div class="card">\n' +
+    //     '    <img class="card-img-top" src="../static/images/2.jpg" alt="Card image cap">\n' +
+    //     '    <div class="card-body">\n' +
+    //     '      <h5 class="card-title">Card title</h5>\n' +
+    //     '      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>\n' +
+    //     '    </div>\n' +
+    //     '    <div class="card-footer">\n' +
+    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
+    //     '    </div>\n' +
+    //     '  </div>\n' +
+    //     '  <div class="card">\n' +
+    //     '    <img class="card-img-top" src="../static/images/3.jpg" alt="Card image cap">\n' +
+    //     '    <div class="card-body">\n' +
+    //     '      <h5 class="card-title">Card title</h5>\n' +
+    //     '      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>\n' +
+    //     '    </div>\n' +
+    //     '    <div class="card-footer">\n' +
+    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
+    //     '    </div>\n' +
+    //     '  </div>\n' +
+    //     '</div>';
+    $.ajax({
+        method: "GET",
+        url: "/resto",
+        data: {}
+    })
+        .done(function (restList) {
+            var restHtml = '<div class="card-deck">\n';
+            var imgCnt = 0;
+            restList.forEach(function (rest) {
+                restHtml += '  <div id="'+ rest['name'] +'" class="card">\n' +
+                    '    <img class="card-img-top" src="../images/' + ((imgCnt % 3) + 1)
+                    + '.jpg" alt="Card image cap">\n' +
+                    '    <div class="card-body">\n' +
+                    '      <h5 class="card-title">' + rest['name'] + '</h5>\n' +
+                    '      <p class="card-text">' + rest['description'] + '</p>\n' +
+                    '    </div>\n' +
+                    '    <div class="card-footer">\n' +
+                    '      <small class="text-muted">Cousine: ' + rest['cousine'] + '   Rate: ' + rest['rate'] + '</small>\n' +
+                    '    </div>\n' +
+                    '  </div>\n';
+                imgCnt += 1;
+            });
+            restHtml += '</div>';
+            $('#titleId').after('<br>' + restHtml);
+            restList.forEach(function (rest) {
+                $('#' + rest['name']).click(function () {
+
+                });
+            });
+        });
+}
 
 function printServerInfo(data) {
     var elem = document.getElementById("inputHost");

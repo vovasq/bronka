@@ -17,7 +17,8 @@ data class Restaurant(
         var description: String,
         var location: String,
         var cousine: String,
-        var rate: Int
+        var rate: Int,
+        var waiter: Long
 //        var categories: List<Category>
 ) {
     override fun toString(): String {

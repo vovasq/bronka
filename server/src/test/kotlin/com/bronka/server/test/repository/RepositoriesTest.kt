@@ -3,6 +3,7 @@ package com.bronka.server.test.repository
 import com.bronka.server.BronkaApplication
 import com.bronka.server.entity.*
 import com.bronka.server.repository.*
+import com.bronka.server.test.business.BookingTestsConfig
 import com.bronka.server.users.Client
 import com.bronka.server.utils.getCurrentTime
 import org.junit.Before
@@ -10,31 +11,37 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
+import org.springframework.context.annotation.Primary
 import org.springframework.test.context.junit4.SpringRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [BronkaApplication::class])
+@ComponentScan("com.brinka.server.repository")
 open class RepositoriesTest {
-
 
     @Qualifier("userRepositoryJpa")
     @Autowired
     private lateinit var userRepo: UserRepositoryJpa
 
+    @Qualifier("restaurantRepositoryJpa")
     @Autowired
     private lateinit var restaurantRepo: RestaurantRepositoryJpa
 
+    @Qualifier("visitRepositoryJpa")
     @Autowired
     private lateinit var visitRepo: VisitRepositoryJpa
 
+    @Qualifier("feedbackRepositoryJpa")
     @Autowired
     private lateinit var feedBackRepo: FeedbackRepositoryJpa
 
-
+    @Qualifier("commentRepository")
     @Autowired
     private lateinit var commentRepo: CommentRepository
 
@@ -57,7 +64,7 @@ open class RepositoriesTest {
                 "mega cool description ",
                 "Saint-P",
                 "Ukranian",
-                5)
+                5, 11)
 
         restaurant1 = Restaurant(
                 null,
@@ -65,7 +72,7 @@ open class RepositoriesTest {
                 "mega cool description ",
                 "Saint-P",
                 "Ukranian",
-                5)
+                5, 11)
 
 //                listOf(Category("GOOD FOOD", "really goood"), Category("Street Food", "street food")))
         client = Client(UserAccount(null, "client", clientName, "vovasName",
@@ -126,12 +133,10 @@ open class RepositoriesTest {
     fun FeedBackRepoTest() {
         println(client.userAccount.name);
         comment = Comment(null, getCurrentTime(),text, client.userAccount.id,client.userAccount.name, null)
-        println("it works")
-
         var feedback =Feedback(null,comment,Rate.FIVE_STARS,"restik", 123,"Vovas")
         feedBackRepo.save(feedback)
-
-        println("it works")
+        assertTrue(feedBackRepo.findByClientName(client.userAccount.name).isNotEmpty())
+        assertTrue(commentRepo.findByAuthorName(client.userAccount.name).isNotEmpty())
     }
 
 

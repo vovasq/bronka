@@ -2,21 +2,25 @@ package com.bronka.server.controller
 
 import com.bronka.server.entity.Restaurant
 import com.bronka.server.entity.UserAccount
+import com.bronka.server.repository.RestaurantRepositoryJpa
 import com.bronka.server.repository.UserRepositoryJpa
 import com.bronka.server.requests.LoginRequest
-import com.bronka.server.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.ModelAndView
 
 
 @RestController
 open class BronkaController {
 
-    @Qualifier("userRepositoryJpa")
     @Autowired
     private lateinit var userRepositoryJpa: UserRepositoryJpa
+
+
+    @Autowired
+    private lateinit var restaurantRepo: RestaurantRepositoryJpa
 
     @GetMapping("alive")
     fun alive(): String {
@@ -33,15 +37,8 @@ open class BronkaController {
 
     @GetMapping("resto")
 //    @RequestParam(required = true)id: Long
-    fun getRestsList(): List<String> {
-        val list = ArrayList<String>()
-        list.addAll(arrayOf("skkaka", "sadsadsa"))
-        return list
-    }
-
-    @GetMapping("/")
-    fun index(): ModelAndView {
-        return ModelAndView("index.html")
+    fun getRestsList(): List<Restaurant> {
+        return restaurantRepo.findAll()
     }
 
     @GetMapping("login")

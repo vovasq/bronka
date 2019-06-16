@@ -16,11 +16,7 @@ class Client(val userAccount: UserAccount) {
     @Autowired
     private lateinit var feedbackRepo: FeedbackRepositoryJpa
 
-    fun getAllRestaurant():List<Restaurant>{
-        return restsRepo.findAll()
-    }
-
-    fun createVisit(restId: String, restName: String, bookingTime: String, numOfPersons: Int): Long? {
+    fun createVisit(restName: String, bookingTime: String, numOfPersons: Int): Long? {
         return requestVisit(Visit(
                 null,
                 getCurrentTime(),
@@ -32,18 +28,6 @@ class Client(val userAccount: UserAccount) {
                 userAccount.id!!)
         )
     }
-
-    private fun requestVisit(visit: Visit): Long? {
-        var result = visitsRepo.save(visit)
-        return result.id
-    }
-
-    fun getVisitInfo(id: Long): Visit {
-        return visitsRepo.getOne(id)
-    }
-
-    private fun notClosedNotDeclined(visitInRep: Visit) = visitInRep.state != VisitState.DECLINED
-            && visitInRep.state != VisitState.CLOSED
 
     fun cancelVisit(visit: Visit): Visit? {
         var visitInRep = visitsRepo.getOne(visit.id)
@@ -66,6 +50,26 @@ class Client(val userAccount: UserAccount) {
         }
     }
 
+    fun getAllRestaurant():List<Restaurant>{
+        return restsRepo.findAll()
+    }
+
+    fun getAllVisitsInfo():List<Visit>{
+        return visitsRepo.findByClientName(userAccount.name)
+    }
+
+    fun getVisitInfo(id: Long): Visit {
+        return visitsRepo.getOne(id)
+    }
+
+    private fun notClosedNotDeclined(visitInRep: Visit) = visitInRep.state != VisitState.DECLINED
+            && visitInRep.state != VisitState.CLOSED
+
+    private fun requestVisit(visit: Visit): Long? {
+        var result = visitsRepo.save(visit)
+        return result.id
+    }
+
     fun getRestsByCategories(categories: List<Category>): List<Restaurant> {
         TODO()
     }
@@ -78,9 +82,12 @@ class Client(val userAccount: UserAccount) {
         TODO()
     }
 
-    fun endVisit(visit: Visit, initialComment: Comment, rate: Rate,
-                 restaurant: Restaurant, client: Client): Feedback {
-        return feedbackRepo.save(Feedback(null, initialComment, rate, restaurant.name,
+    fun endVisit(visitId: Long, initialComment: Comment, rate: Rate,
+                 restaurantName: String, client: Client): Feedback {
+        var visit = visitsRepo.getOne(visitId)
+        visit.state = VisitState.END
+        visitsRepo.save(visit)
+        return feedbackRepo.save(Feedback(null, initialComment, rate, restaurantName,
                 client.userAccount.id!!, client.userAccount.name))
     }
 
