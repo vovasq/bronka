@@ -1,6 +1,5 @@
 package com.bronka.server.test.business
 
-//import com.bronka.server.repository.VisitRepository
 import com.bronka.server.entity.Restaurant
 import com.bronka.server.entity.VisitState
 import com.bronka.server.test.business.mock.RestaurantRepoMock

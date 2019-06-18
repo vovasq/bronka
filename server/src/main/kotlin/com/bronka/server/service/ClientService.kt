@@ -5,7 +5,9 @@ import com.bronka.server.repository.UserRepositoryJpa
 import com.bronka.server.users.Client
 import org.apache.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
+@Service
 class ClientService {
 
     private val LOG = Logger.getLogger(UserAccount::class.java)
@@ -14,7 +16,7 @@ class ClientService {
     private lateinit var userRepo: UserRepositoryJpa
 
     fun createVisit(userId: Long, restName: String, bookingTime: String, numOfPersons: Int): Long? {
-        return clientById(userId).createVisit(restName, bookingTime, numOfPersons)
+        return Client(userRepo.getOne(userId)).createVisit(restName, bookingTime, numOfPersons)
     }
 
     fun cancelVisit(userId: Long, visit: Visit): Visit? {
@@ -35,6 +37,5 @@ class ClientService {
     }
 
     private fun clientById(userId: Long) = Client(userRepo.getOne(userId))
-
 
 }

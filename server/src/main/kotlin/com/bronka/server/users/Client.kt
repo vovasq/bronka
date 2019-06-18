@@ -6,15 +6,22 @@ import com.bronka.server.repository.RestaurantRepositoryJpa
 import com.bronka.server.repository.VisitRepositoryJpa
 import com.bronka.server.utils.getCurrentTime
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.ApplicationContext
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import org.springframework.stereotype.Component
+import javax.annotation.PostConstruct
 
 class Client(val userAccount: UserAccount) {
 
     @Autowired
     private lateinit var restsRepo: RestaurantRepositoryJpa
-    @Autowired
-    private lateinit var visitsRepo: VisitRepositoryJpa
+
     @Autowired
     private lateinit var feedbackRepo: FeedbackRepositoryJpa
+
+    @Autowired
+    private lateinit var visitsRepo: VisitRepositoryJpa
 
     fun createVisit(restName: String, bookingTime: String, numOfPersons: Int): Long? {
         return requestVisit(Visit(
@@ -50,11 +57,11 @@ class Client(val userAccount: UserAccount) {
         }
     }
 
-    fun getAllRestaurant():List<Restaurant>{
+    fun getAllRestaurant(): List<Restaurant> {
         return restsRepo.findAll()
     }
 
-    fun getAllVisitsInfo():List<Visit>{
+    fun getAllVisitsInfo(): List<Visit> {
         return visitsRepo.findByClientName(userAccount.name)
     }
 

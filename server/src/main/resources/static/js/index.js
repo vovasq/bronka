@@ -39,14 +39,19 @@ $(document).ready(function () {
                 data: data
             })
                 .done(function (msg) {
-                    if (  msg['id']== null || msg['id'] == undefined)
+                    if (msg['id'] == null || msg['id'] == undefined)
                         alert('Wrong Login or Password');
-
                     else {
                         console.log("res = " + msg['id']);
-                        userId=msg['id'];
+                        userId = msg['id'];
+                        role = msg['role'];
                         $('#regFormId').remove();
-                        $('#titleId').html('Welcome To Bronka!');
+                        createCookie("id", userId, 1);
+                        createCookie("role", role, 1);
+                        if (role == "Client")
+                            location.replace("http://localhost:7778/client");
+                        else
+                            location.replace("http://localhost:7778/waiter");
                         loadRestCards();
                     }
                 });
@@ -76,188 +81,33 @@ $(document).ready(function () {
                 data: data
             })
                 .done(function (msg) {
-                    alert("Id is " + msg['id']);
+                    console.log("Id is " + msg['id']);
                 });
         }
     });
-    //
-    // $.getJSON("/info", function (data) {
-    //     printServerInfo(data);
-    // });
-    // $('#updateButton').on('click', function (event) {
-    //     event.preventDefault(); // To prevent following the link (optional)
-    //     sendUpdateServer();
-    // });
-    // var data = ;
 });
 
 
-function loadRestaurants() {
-    var initHtml = '<div class="container mt-3">\n' +
-        '  <h2>Filterable Table</h2>\n' +
-        '  <p>Type something in the input field to search the table for first names, last names or emails:</p>  \n' +
-        '  <input class="form-control" id="myInput" type="text" placeholder="Search..">\n' +
-        '  <br>\n' +
-        '  <table class="table table-bordered">\n' +
-        '    <thead>\n' +
-        '      <tr>\n' +
-        '        <th>Firstname</th>\n' +
-        '        <th>Lastname</th>\n' +
-        '        <th>Email</th>\n' +
-        '      </tr>\n' +
-        '    </thead>\n' +
-        '    <tbody id="myTable">\n' +
-        '      <tr>\n' +
-        '        <td>John</td>\n' +
-        '        <td>Doe</td>\n' +
-        '        <td>john@example.com</td>\n' +
-        '      </tr>\n' +
-        '      <tr>\n' +
-        '        <td>Mary</td>\n' +
-        '        <td>Moe</td>\n' +
-        '        <td>mary@mail.com</td>\n' +
-        '      </tr>\n' +
-        '      <tr>\n' +
-        '        <td>July</td>\n' +
-        '        <td>Dooley</td>\n' +
-        '        <td>july@greatstuff.com</td>\n' +
-        '      </tr>\n' +
-        '      <tr>\n' +
-        '        <td>Anja</td>\n' +
-        '        <td>Ravendale</td>\n' +
-        '        <td>a_r@test.com</td>\n' +
-        '      </tr>\n' +
-        '    </tbody>\n' +
-        '  </table>\n' +
-        '  \n' +
-        '  <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>\n' +
-        '</div>\n';
-    $('#titleId').after(initHtml);
-    $("#myInput").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
+function createCookie(name, value, days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+    } else var expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-function loadRestCards() {
-    // var initHtml = '<div class="card-deck">\n' +
-    //     '  <div class="card">\n' +
-    //     '    <img class="card-img-top" src="../static/images/1.jpg" alt="Card image cap">\n' +
-    //     '    <div class="card-body">\n' +
-    //     '      <h5 class="card-title">Card title</h5>\n' +
-    //     '      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>\n' +
-    //     '    </div>\n' +
-    //     '    <div class="card-footer">\n' +
-    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
-    //     '    </div>\n' +
-    //     '  </div>\n' +
-    //     '  <div class="card">\n' +
-    //     '    <img class="card-img-top" src="../static/images/2.jpg" alt="Card image cap">\n' +
-    //     '    <div class="card-body">\n' +
-    //     '      <h5 class="card-title">Card title</h5>\n' +
-    //     '      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>\n' +
-    //     '    </div>\n' +
-    //     '    <div class="card-footer">\n' +
-    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
-    //     '    </div>\n' +
-    //     '  </div>\n' +
-    //     '  <div class="card">\n' +
-    //     '    <img class="card-img-top" src="../static/images/3.jpg" alt="Card image cap">\n' +
-    //     '    <div class="card-body">\n' +
-    //     '      <h5 class="card-title">Card title</h5>\n' +
-    //     '      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>\n' +
-    //     '    </div>\n' +
-    //     '    <div class="card-footer">\n' +
-    //     '      <small class="text-muted">Last updated 3 mins ago</small>\n' +
-    //     '    </div>\n' +
-    //     '  </div>\n' +
-    //     '</div>';
-    $.ajax({
-        method: "GET",
-        url: "/resto",
-        data: {}
-    })
-        .done(function (restList) {
-            var restHtml = '<div class="card-deck">\n';
-            var imgCnt = 0;
-            restList.forEach(function (rest) {
-                restHtml += '  <div id="'+ rest['name'] +'" class="card">\n' +
-                    '    <img class="card-img-top" src="../images/' + ((imgCnt % 3) + 1)
-                    + '.jpg" alt="Card image cap">\n' +
-                    '    <div class="card-body">\n' +
-                    '      <h5 class="card-title">' + rest['name'] + '</h5>\n' +
-                    '      <p class="card-text">' + rest['description'] + '</p>\n' +
-                    '    </div>\n' +
-                    '    <div class="card-footer">\n' +
-                    '      <small class="text-muted">Cousine: ' + rest['cousine'] + '   Rate: ' + rest['rate'] + '</small>\n' +
-                    '    </div>\n' +
-                    '  </div>\n';
-                imgCnt += 1;
-            });
-            restHtml += '</div>';
-            $('#titleId').after('<br>' + restHtml);
-            restList.forEach(function (rest) {
-                $('#' + rest['name']).click(function () {
-
-                });
-            });
-        });
-}
-
-function printServerInfo(data) {
-    var elem = document.getElementById("inputHost");
-    elem.value = data['hostName'];
-
-    elem = document.getElementById("inputPasscode");
-    elem.value = data['passcode'];
-
-    elem = document.getElementById("inputIp");
-    var interfaces = '';
-    data['netInterfaces'].forEach(function (i) {
-        interfaces += i['name'] + ": " + i['ip'] + '  ';
-    });
-    elem.value = interfaces;
-
-    elem = document.getElementById("checkboxIsVisible");
-    if (data['isVisible'] == true) {
-        elem.checked = "checked";
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
-
+    return null;
 }
 
-function sendUpdateServer() {
-    var data = {};
-    var elem = document.getElementById("inputHost");
-    data['hostName'] = elem.value;
-
-    elem = document.getElementById("inputPasscode");
-    data['passcode'] = elem.value;
-
-    elem = document.getElementById("checkboxIsVisible");
-
-    if (elem.checked == "checked") {
-        data['isVisible'] = true;
-        console.log(true);
-    } else {
-        data['isVisible'] = false;
-        console.log(false);
-    }
-    console.log(data);
-    // data = JSON.stringify(data);
-    console.log(data);
-    $.post("/update",
-        data,
-        function () {
-            console.log("success!!!")
-        });
-    // $.ajax({
-    //     type: "POST",
-    //     url: "http://localhost:8777/update",
-    //     dataType: 'json',
-    //     data: data,
-    //     success: function(){console.log("success!!!")},
-    //     error: function(){console.log("ERORORORO!!!")}
-    // });
+function eraseCookie(name) {
+    createCookie(name, "", -1);
 }

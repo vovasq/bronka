@@ -9,18 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.ModelAndView
 
 
 @RestController
-open class BronkaController {
+open class LoginController {
 
     @Autowired
     private lateinit var userRepositoryJpa: UserRepositoryJpa
-
-
-    @Autowired
-    private lateinit var restaurantRepo: RestaurantRepositoryJpa
 
     @GetMapping("alive")
     fun alive(): String {
@@ -33,12 +28,6 @@ open class BronkaController {
             |I've been gone since, like, July, niggas actin' like I died<br>
             |They won't be expectin' shit when Capo go to slide (hah)<br>
             |Cause I told them that we put that shit behind us but I— (hah)<br>""".trimMargin("|")
-    }
-
-    @GetMapping("resto")
-//    @RequestParam(required = true)id: Long
-    fun getRestsList(): List<Restaurant> {
-        return restaurantRepo.findAll()
     }
 
     @GetMapping("login")

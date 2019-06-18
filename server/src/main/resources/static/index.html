@@ -5,12 +5,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/index.css">
 
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script>
+        if (readCookie("id") != null && readCookie("id") != undefined) {
+            if (readCookie("role") == "Client")
+                location.replace("http://localhost:7778/client");
+            else
+                location.replace("http://localhost:7778/waiter");
+        }
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    </script>
 
     <title>Bronka</title>
 </head>
@@ -34,25 +49,19 @@
             <label for="inputPasswordId">Password</label>
             <input type="password" class="form-control" id="inputPasswordId" placeholder="Password" required>
         </div>
-        <button id="loginButtonId" type="submit" class="btn btn-primary">Login</button>
+        <button id="loginButtonId" type="submit" class="btn btn-primary"  >Login</button>
         <a id="registerLinkId" href="#" style="margin-left: 15px">Register</a>
     </form>
-
 </div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-<script src="js/jquery-3.3.1.slim.min.js"></script>
-<script src="../static/js/jquery-3.4.min.js"></script>
-<script src="../static/js/popper.min.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
-<script src="../static/js/index.js"></script>
 
-<script src="../js/jquery-3.4.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/index.js"></script>
+<script src="./js/jquery-3.4.min.js"></script>
+<script src="./js/popper.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/index.js"></script>
 
 
 </body>
