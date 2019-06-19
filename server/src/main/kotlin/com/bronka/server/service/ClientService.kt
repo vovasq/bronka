@@ -1,6 +1,7 @@
 package com.bronka.server.service
 
 import com.bronka.server.entity.*
+import com.bronka.server.repository.AllRepositories
 import com.bronka.server.repository.UserRepositoryJpa
 import com.bronka.server.users.Client
 import org.apache.log4j.Logger
@@ -15,12 +16,15 @@ class ClientService {
     @Autowired
     private lateinit var userRepo: UserRepositoryJpa
 
+    @Autowired
+    private lateinit var repos: AllRepositories
+
     fun createVisit(userId: Long, restName: String, bookingTime: String, numOfPersons: Int): Long? {
-        return Client(userRepo.getOne(userId)).createVisit(restName, bookingTime, numOfPersons)
+        return clientById(userId).createVisit(restName, bookingTime, numOfPersons)
     }
 
-    fun cancelVisit(userId: Long, visit: Visit): Visit? {
-        return clientById(userId).cancelVisit(visit)
+    fun cancelVisit(userId: Long, visitId: Long): Visit? {
+        return clientById(userId).cancelVisit(visitId)
     }
 
     fun changeVisit(userId: Long, visit: Visit): Visit? {
@@ -32,10 +36,14 @@ class ClientService {
         return clientById(userId).endVisit(visitId, initialComment, rate, restaurantName, client)
     }
 
-    fun getAllRestaurant(userId: Long):List<Restaurant>{
+    fun getAllRestaurant(userId: Long): List<Restaurant> {
         return clientById(userId).getAllRestaurant()
     }
 
-    private fun clientById(userId: Long) = Client(userRepo.getOne(userId))
+    fun getAllVisitsInfo(userId: Long): List<Visit> {
+        return clientById(userId).getAllVisitsInfo()
+    }
+
+    private fun clientById(userId: Long) = Client(userRepo.getOne(userId), repos)
 
 }

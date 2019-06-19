@@ -1,43 +1,41 @@
 $(document).ready(function () {
-    loadRestInfo();
     loadVisitCards();
-    setInterval(function() {
+    setInterval(function () {
         loadVisitCards();
         // console.log("kek")
     }, 6000);
-
-    $('#exampleModal').on('show.bs.modal', function (event) {
+    console.log('kekkekeekekke');
+    $('#closeVisitModalId').on('show.bs.modal', function (event) {
+        console.log('kekkekeekekke');
         var button = $(event.relatedTarget); // Button that triggered the modal
         var recipient = button.data('whatever'); // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        modal.find('#modalLabel').text('Approve visit ' + recipient);
-        modal.find('#restaurantId').val('Are You sure to approve visit with id =' + recipient);
-
-        $('#approveButtonId').click(function () {
+        console.log('buuton = ' + button + ' recipient = ' +  recipient);
+        modal.find('#closeVisitModalLabelId').text('Cancel visit ' + recipient);
+        modal.find('#closeVisitTextId').val('Are You sure to cancel visit with id =' + recipient);
+        $('#closeVisitButtonId').click(function () {
             var data = {};
-            data['waiterId'] = readCookie('id');
-            data['restaurantName'] = readCookie('restaurantName');
+            data['userId'] = readCookie('id');
             data['visitId'] = recipient;
             console.log(data);
             $.ajax({
                 method: "GET",
-                url: "/approve",
+                url: "/cancel",
                 data: data
             }).done(function (msg) {
                 console.log("Visit id =  " + msg);
             });
         });
     });
-
-    $('#declineModal').on('show.bs.modal', function (event) {
+    $('#feedbackModalId').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var recipient = button.data('whatever');
         var modal = $(this);
-        modal.find('#declineModalLabel').text('Decline visit ' + recipient);
-        modal.find('#declineTextId').text('Are You sure to decline visit with id = ' + recipient + ' ?');
-        $('#declineButtonId').click(function () {
+        modal.find('#feedbackModalId').text('Feedback visit ' + recipient);
+        modal.find('#feedbackModalTextId').text('Are leave feedback with id = ' + recipient + ' ?');
+        $('#feedbackButtonId').click(function () {
             var data = {};
             data['waiterId'] = readCookie('id');
             data['restaurantName'] = readCookie('restaurantName');
@@ -52,12 +50,6 @@ $(document).ready(function () {
                 console.log("Response is =  " + msg);
             });
         });
-    });
-    $('#exampleModal').on('hidden.bs.modal', function (e) {
-        $('#approveButtonId').off("click");
-    });
-    $('#declineModal').on('hidden.bs.modal', function (e) {
-        $('#declineButtonId').off("click");
     });
 });
 
@@ -85,45 +77,31 @@ function eraseCookie(name) {
     createCookie(name, "", -1);
 }
 
-function loadRestInfo() {
-    $.ajax({
-        method: "GET",
-        url: "/getrest",
-        data: {
-            'id': readCookie('id'),
-        }
-    }).done(function (rest) {
-        createCookie('restaurantName',rest['name']);
-        console.log(rest);
-    });
-}
-
 function loadVisitCards() {
     $.ajax({
         method: "GET",
-        url: "/visits",
+        url: "/myvisits",
         data: {
-            'id': readCookie('id'),
-            'restaurantName': readCookie('restaurantName')
+            'id': readCookie('id')
         }
     })
         .done(function (visitList) {
-
             var restHtml = '';
             visitList.forEach(function (visit) {
                 console.log(visit);
                 restHtml += '<div class="card">\n' +
                     '  <div class="card-body">\n' +
-                    '    Client:  ' + visit['clientName'] + '<br>\n' +
+                    '    Restaurant: ' + visit['restaurant'] + '<br>\n' +
                     '    Creating Time: ' + visit['creatingTime'] + '<br>\n' +
                     '    Persons: ' + visit['numOfPersons'] + '<br>\n' +
                     '    Booking Time: ' + visit['bookingTime'] + '<br>\n' +
                     '    State: ' + visit['state'] + '<br>\n' +
-                    '<button type="button" style="margin: 5px;" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="' + visit['id'] + '">' +
-                    'Approve' +
+
+                    '<button type="button" style="margin: 5px;" class="btn btn-danger" data-toggle="modal" data-target="#closeVisitModalId" data-whatever="' + visit['id'] + '">' +
+                    'Close' +
                     '</button>\n' +
-                    '<button type="button" style="margin: 5px;" class="btn btn-danger" data-toggle="modal" data-target="#declineModal" data-whatever="' + visit['id'] + '">' +
-                    'Decline' +
+                    '<button type="button" style="margin: 5px;" class="btn btn-primary" data-toggle="modal" data-target="#feedbackModalId" data-whatever="' + visit['id'] + '">' +
+                    'Feedback' +
                     '</button>\n' +
                     '  </div>\n' +
                     '</div>';
@@ -131,5 +109,3 @@ function loadVisitCards() {
             $('#regFormId').html('<br>' + restHtml);
         });
 }
-
-

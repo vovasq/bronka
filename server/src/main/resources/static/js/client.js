@@ -29,7 +29,7 @@ $(document).ready(function () {
     });
     $('#exampleModal').on('hidden.bs.modal', function (e) {
        $ ('#bookButtonId').off( "click" );
-    })
+    });
 });
 
 function createCookie(name, value, days) {
@@ -66,7 +66,7 @@ function loadRestCards() {
             var restHtml = '<div class="card-deck">\n';
             var imgCnt = 0;
             restList.forEach(function (rest) {
-                restHtml += '  <div id="' + rest['name'] + '" class="card">\n' +
+                restHtml += '  <div id="' + rest['name'] + '" class="card text-center">\n' +
                     '    <img class="card-img-top" src="../images/' + ((imgCnt % 3) + 1)
                     + '.jpg" alt="Card image cap">\n' +
                     '    <div class="card-body">\n' +

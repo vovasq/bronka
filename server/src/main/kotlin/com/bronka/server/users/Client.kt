@@ -1,6 +1,7 @@
 package com.bronka.server.users
 
 import com.bronka.server.entity.*
+import com.bronka.server.repository.AllRepositories
 import com.bronka.server.repository.FeedbackRepositoryJpa
 import com.bronka.server.repository.RestaurantRepositoryJpa
 import com.bronka.server.repository.VisitRepositoryJpa
@@ -12,16 +13,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
-class Client(val userAccount: UserAccount) {
+class Client(val userAccount: UserAccount, val repos:AllRepositories) {
 
-    @Autowired
-    private lateinit var restsRepo: RestaurantRepositoryJpa
-
-    @Autowired
-    private lateinit var feedbackRepo: FeedbackRepositoryJpa
-
-    @Autowired
-    private lateinit var visitsRepo: VisitRepositoryJpa
 
     fun createVisit(restName: String, bookingTime: String, numOfPersons: Int): Long? {
         return requestVisit(Visit(
@@ -36,44 +29,44 @@ class Client(val userAccount: UserAccount) {
         )
     }
 
-    fun cancelVisit(visit: Visit): Visit? {
-        var visitInRep = visitsRepo.getOne(visit.id)
+    fun cancelVisit(visitId: Long): Visit? {
+        var visitInRep = repos.visitsRepo.getOne(visitId)
         if (notClosedNotDeclined(visitInRep)) {
             visitInRep.state = VisitState.DECLINED
         } else {
             return null
         }
-        return visitsRepo.save(visitInRep)
+        return repos.visitsRepo.save(visitInRep)
     }
 
     fun changeVisit(visit: Visit): Visit? {
-        var visitInRep = visitsRepo.getOne(visit.id)
+        var visitInRep = repos.visitsRepo.getOne(visit.id)
         if (notClosedNotDeclined(visitInRep) && visitInRep != null) {
             visitInRep.bookingTime = visit.bookingTime
             visitInRep.numOfPersons = visit.numOfPersons
-            return visitsRepo.save(visitInRep)
+            return repos.visitsRepo.save(visitInRep)
         } else {
             return null
         }
     }
 
     fun getAllRestaurant(): List<Restaurant> {
-        return restsRepo.findAll()
+        return repos.restsRepo.findAll()
     }
 
     fun getAllVisitsInfo(): List<Visit> {
-        return visitsRepo.findByClientName(userAccount.name)
+        return repos.visitsRepo.findByClientName(userAccount.name)
     }
 
     fun getVisitInfo(id: Long): Visit {
-        return visitsRepo.getOne(id)
+        return repos.visitsRepo.getOne(id)
     }
 
     private fun notClosedNotDeclined(visitInRep: Visit) = visitInRep.state != VisitState.DECLINED
             && visitInRep.state != VisitState.CLOSED
 
     private fun requestVisit(visit: Visit): Long? {
-        var result = visitsRepo.save(visit)
+        var result = repos.visitsRepo.save(visit)
         return result.id
     }
 
@@ -91,10 +84,10 @@ class Client(val userAccount: UserAccount) {
 
     fun endVisit(visitId: Long, initialComment: Comment, rate: Rate,
                  restaurantName: String, client: Client): Feedback {
-        var visit = visitsRepo.getOne(visitId)
+        var visit = repos.visitsRepo.getOne(visitId)
         visit.state = VisitState.END
-        visitsRepo.save(visit)
-        return feedbackRepo.save(Feedback(null, initialComment, rate, restaurantName,
+        repos.visitsRepo.save(visit)
+        return repos.feedbackRepo.save(Feedback(null, initialComment, rate, restaurantName,
                 client.userAccount.id!!, client.userAccount.name))
     }
 

@@ -1,19 +1,13 @@
 package com.bronka.server.users
 
 import com.bronka.server.entity.*
+import com.bronka.server.repository.AllRepositories
 import com.bronka.server.repository.FeedbackRepositoryJpa
 import com.bronka.server.repository.RestaurantRepositoryJpa
 import com.bronka.server.repository.VisitRepositoryJpa
 import org.springframework.beans.factory.annotation.Autowired
 
-class Waiter(val userAccount: UserAccount, var restaurantName: String?) {
-
-    @Autowired
-    private lateinit var restsRepo: RestaurantRepositoryJpa
-    @Autowired
-    private lateinit var visitsRepo: VisitRepositoryJpa
-    @Autowired
-    private lateinit var feedbackRepo: FeedbackRepositoryJpa
+class Waiter(val userAccount: UserAccount, var restaurantName: String?, val repos:AllRepositories) {
 
     fun registerNewRestaurant(restaurant: Restaurant) {
         TODO()
@@ -28,14 +22,14 @@ class Waiter(val userAccount: UserAccount, var restaurantName: String?) {
     }
 
     fun getNewVisits(): List<Visit> {
-        return visitsRepo.findByRestaurant(restaurantName!!)
+        return repos.visitsRepo.findByRestaurant(restaurantName!!)
     }
 
     private fun updateVisitState(id: Long, state: VisitState) {
-        var visit = visitsRepo.getOne(id)
+        var visit = repos.visitsRepo.getOne(id)
         if (visit != null) {
             visit.state = state
-            visitsRepo.save(visit)
+            repos.visitsRepo.save(visit)
         }
     }
 

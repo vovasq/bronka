@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository
 
 interface RestaurantRepositoryJpa : JpaRepository<Restaurant, Long>{
     fun findByName(name:String): List<Restaurant>
-
+    fun findByWaiter(id:Long):Restaurant
 }

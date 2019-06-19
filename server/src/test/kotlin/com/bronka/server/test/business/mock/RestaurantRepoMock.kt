@@ -27,6 +27,10 @@ class RestaurantRepoMock : RestaurantRepositoryJpa {
         idToNameMap.remove(p0)
     }
 
+    override fun findByWaiter(id: Long): Restaurant {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun <S : Restaurant?> save(p0: S): S {
         var id = ++idCounter
         if (p0 != null) {

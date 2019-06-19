@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -19,35 +19,33 @@
 
 <br>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="closeVisitModalId" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Approve Visit?</h5>
+                <h5 class="modal-title" id="closeVisitModalLabelId">End Visit?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <!--                <form style="width: 80%!important;">-->
-                <div id="restaurantId">
-                    Are You sure to approve visit with id =
+                <div class="form-group">
+                    <p  id="closeVisitTextId">Cancel Visit?</p>
                 </div>
-                <!--                </form>-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="approveButtonId">Approve</button>
+                <button type="button" class="btn btn-danger" id="closeVisitButtonId">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="declineModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackModalId" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="declineModalLabel">Decline Visit?</h5>
+                <h5 class="modal-title" id="feedbackModalLabelId">Cancel Visit?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -55,8 +53,7 @@
             <div class="modal-body">
                 <form style="width: 80%!important;">
                     <div class="form-group">
-<!--                        <label class="col-form-label" id="declineTextId"></label>-->
-                        <p  id="declineTextId">Decline Visit?</p>
+                        <p  id="feedbackModalTextId">Leave Feedback?</p>
                     </div>
                     <div class="form-group">
                         <label for="commentId" class="col-form-label">Comment:</label>
@@ -66,35 +63,23 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="declineButtonId">Decline</button>
+                <button type="button" class="btn btn-primary" id="feedbackButtonId">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <h1 id="titleId" style="text-align: center; margin-top: 3%">Visits</h1>
+    <h1 id="titleId" style="text-align: center; margin-top: 3%">My Visits</h1>
     <br>
-    <form id="regFormId" class="center" style="width: 80%!important;">
-    <!--            <label for="idInputEmail">Email address</label>-->
-    <!--            <input type="email" class="form-control" id="idInputEmail" aria-describedby="emailHelp" placeholder="Enter email" required>-->
-    <!--        </div>-->
-    <!--        <div id="loginFormId" class="form-group">-->
-    <!--            <label for="inputPasswordId">Password</label>-->
-    <!--            <input type="password" class="form-control" id="inputPasswordId" placeholder="Password" required>-->
-    <!--        </div>-->
-    <!--        <button id="loginButtonId" type="submit" class="btn btn-primary"  >Login</button>-->
-    </form>
+    <form id="regFormId" class="center" style="width: 80%!important;"></form>
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 <script src="./js/jquery-3.4.min.js"></script>
 <script src="./js/popper.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
-<script src="./js/waiter.js"></script>
+<script src="./js/cabinet.js"></script>
+
 
 </body>
-
 </html>
