@@ -49,8 +49,6 @@ class ClientController {
         println(clientService.cancelVisit(userId,visitId))
         return "OK"
     }
-
-
     @PostMapping("/book")
     @ResponseBody
     fun bookRestaurant(request: BookRequest): Long?{
