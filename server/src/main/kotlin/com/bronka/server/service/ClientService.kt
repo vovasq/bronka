@@ -23,6 +23,10 @@ class ClientService {
         return clientById(userId).createVisit(restName, bookingTime, numOfPersons)
     }
 
+    fun getAllFeedbacksForRestaurantByName(restName: String) : List<Feedback>{
+        return repos.feedbackRepo.findByRestaurant(restName)
+    }
+
     fun cancelVisit(userId: Long, visitId: Long): Visit? {
         return clientById(userId).cancelVisit(visitId)
     }
@@ -31,15 +35,28 @@ class ClientService {
         return clientById(userId).changeVisit(visit)
     }
 
-    fun endVisit(userId: Long, visitId: Long, initialComment: Comment, rate: Rate): Feedback {
+    fun endVisit(userId: Long, visitId: Long, initialComment: String, rate: Rate): Feedback {
         val thisClient = clientById(userId)
         return thisClient.endVisit(
                 visitId,
                 initialComment,
+                rate.toInt(),
                 rate,
                 repos.visitsRepo.findById(visitId).get().restaurant,
                 thisClient)
     }
+
+
+//    fun endVisit(userId: Long, visitId: Long, initialComment: Comment, rate: Rate): Feedback {
+//        val thisClient = clientById(userId)
+//        return thisClient.endVisit(
+//                visitId,
+//                initialComment,
+//                rate.toInt(),
+//                rate,
+//                repos.visitsRepo.findById(visitId).get().restaurant,
+//                thisClient)
+//    }
 
     fun getAllRestaurant(userId: Long): List<Restaurant> {
         return clientById(userId).getAllRestaurant()

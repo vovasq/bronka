@@ -30,6 +30,13 @@ class ClientController {
         return restaurantRepo.findAll()
     }
 
+    @GetMapping("/resto/feedback")
+    @ResponseBody
+    fun getRestFeedback(@RequestParam(required = true) restName: String): List<Feedback> {
+        return clientService.getAllFeedbacksForRestaurantByName(restName)
+    }
+
+
     @GetMapping("/client")
     fun clientPage(): String {
         return "client"
@@ -65,6 +72,7 @@ class ClientController {
     @ResponseBody
     fun closeVisit(request: FeedbackRequest): Feedback {
         println(request)
+/*
         return clientService.endVisit(
                 request.userId,
                 request.visitId,
@@ -74,6 +82,13 @@ class ClientController {
                         null,
                         null),
                 Rate.valueOf(request.rate))
+*/
+
+        return clientService.endVisit(
+                request.userId,
+                request.visitId,
+                request.text, Rate.valueOf(request.rate))
+
     }
 
 }

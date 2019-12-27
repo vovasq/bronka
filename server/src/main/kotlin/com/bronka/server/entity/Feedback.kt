@@ -11,20 +11,21 @@ data class Feedback(
         @Column(name = "id")
         var id: Long?,
 
-        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+//        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
 //        @JoinTable(name = "feed_comment",
 //                joinColumns = arrayOf(JoinColumn(name = "feedback_id", referencedColumnName = "id")) ,
 //                inverseJoinColumns = arrayOf(JoinColumn(name = "comment_id", referencedColumnName = "id")))
 
-        @JoinColumn(name = "comment_id", referencedColumnName = "id")
-        var comment: Comment?,
+//        @JoinColumn(name = "comment_id", referencedColumnName = "id")
+//        var comment: Comment?,
+        val text: String,
         val rate: Rate,
         val restaurant: String,
         val clientId: Long,
         val clientName: String
 ) {
     override fun toString(): String {
-        return "Feedback(id=$id, initialComment=$comment, rate=$rate, restaurant=$restaurant, client=$clientId)"
+        return "Feedback(id=$id, rate=$rate, restaurant=$restaurant, client=$clientId)"
     }
 }
 
@@ -33,5 +34,15 @@ enum class Rate {
     OK,
     BAD,
     SHEET,
-    EXCELLENT
+    EXCELLENT;
+
+    fun toInt(): Int {
+        return when(this){
+            EXCELLENT -> 5
+            GREAT -> 4
+            OK -> 3
+            BAD -> 2
+            else -> 1
+        }
+    }
 }

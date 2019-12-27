@@ -34,7 +34,7 @@ class WaiterService {
 
     fun declineVisit(waiterId: Long, restaurantName: String, visitId: Long, comment:String) {
         getWaiterById(waiterId,restaurantName).declineVisit(visitId, Comment(null,
-                getCurrentTime(),comment,waiterId,"name", null))
+                getCurrentTime(),comment,waiterId,"name"))
     }
 
 

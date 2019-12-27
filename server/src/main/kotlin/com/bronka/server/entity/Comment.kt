@@ -13,11 +13,11 @@ data class Comment(
         val creationTime: String,
         val text: String,
         val authorId: Long?,
-        val authorName: String?,
+        val authorName: String?
 
 //        @OneToOne(mappedBy = "comment",cascade = arrayOf(CascadeType.ALL)) //, fetch = FetchType.EAGER)
-        @ManyToOne//(cascade = arrayOf(CascadeType.ALL)) //, fetch = FetchType.EAGER)
-        var feedback: Feedback?
+//        @ManyToOne//(cascade = arrayOf(CascadeType.ALL)) //, fetch = FetchType.EAGER)
+//        var feedback: Feedback?
 ) {
     override fun toString(): String {
         return "Comment(id=$id, creationTime=$creationTime, text='$text', authorId='$authorId', authorName='$authorName')"

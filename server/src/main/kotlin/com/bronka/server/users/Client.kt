@@ -73,20 +73,37 @@ class Client(val userAccount: UserAccount, val repos: AllRepositories) {
         TODO()
     }
 
-    private fun updateRestaurantRateAfterVisit(restName: String, rate: Rate) =
-            repos.restsRepo.save(repos.restsRepo.findByName(restName)[0])
+    private fun updateRestaurantRateAfterVisit(restName: String, rate: Int) {
 
-    fun endVisit(visitId: Long, initialComment: Comment, rate: Rate,
+        val rest = repos.restsRepo.findByName(restName)[0]
+        rest.rate = (rest.rate + rate) / 2
+        repos.restsRepo.save(rest)
+    }
+
+//    fun endVisit(visitId: Long, initialComment: Comment, rateInt: Int, rate: Rate,
+//                 restName: String, client: Client): Feedback {
+//        val visit = repos.visitsRepo.getOne(visitId)
+//        visit.state = VisitState.END
+//        repos.visitsRepo.save(visit)
+//        repos.commentRepository.save(initialComment)
+//        updateRestaurantRateAfterVisit(restName, rateInt)
+//        val feedback = repos.feedbackRepo.save(Feedback(null, initialComment, rate, restName,
+//                client.userAccount.id!!, client.userAccount.name))
+//        return feedback
+//    }
+
+    fun endVisit(visitId: Long, initialComment: String, rateInt: Int, rate: Rate,
                  restName: String, client: Client): Feedback {
         val visit = repos.visitsRepo.getOne(visitId)
         visit.state = VisitState.END
         repos.visitsRepo.save(visit)
-        repos.commentRepository.save(initialComment)
-        updateRestaurantRateAfterVisit(restName, rate)
+//        repos.commentRepository.save(initialComment)
+        updateRestaurantRateAfterVisit(restName, rateInt)
         val feedback = repos.feedbackRepo.save(Feedback(null, initialComment, rate, restName,
                 client.userAccount.id!!, client.userAccount.name))
         return feedback
     }
+
 
 }
 

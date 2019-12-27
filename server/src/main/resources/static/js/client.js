@@ -75,9 +75,9 @@ function loadRestCards() {
                     '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="' + rest['name'] + '">' +
                     'Book now' +
                     '</button>\n' +
-                    // '    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">\n' +
-                    // '        Launch demo modal\n' +
-                    // '    </button>\n' +
+                    '    <button type="button" class="btn btn-primary" onclick="loadAllFeedbacksCards(\''+ rest['name'] +'\')">\n' +
+                    '        View Feedbacks\n' +
+                    '    </button>\n' +
                     '    </div>\n' +
                     '    <div class="card-footer">\n' +
                     '      <small class="text-muted">Cousine: ' + rest['cousine'] + '   Rate: ' + rest['rate'] + '</small>\n' +
@@ -92,6 +92,41 @@ function loadRestCards() {
 
                 });
             });
+        });
+}
+
+
+function loadAllFeedbacksCards(name) {
+    console.log('invoke with name ' + name);
+    $.ajax({
+        method: "GET",
+        url: "/resto/feedback",
+        data: {
+            'restName': name
+        }
+    })
+        .done(function (feedbackList) {
+            var restHtml = '';
+            feedbackList.forEach(function (feedback) {
+                console.log(feedback);
+                restHtml += '<div class="card">\n' +
+                    '  <div class="card-body">\n' +
+                    '    Restaurant: ' + feedback['restaurant'] + '<br>\n' +
+                    '    Client name: ' + feedback['clientName'] + '<br>\n' +
+                    '    Rate: ' + feedback['rate'] + '<br>\n' +
+                    '    Comment: ' + feedback['text'] + '<br>\n' +
+                    // '    Time: ' + feedback['comment']['creationTime'] + '<br>\n' +
+
+                    // '<button type="button" style="margin: 5px;" class="btn btn-danger" data-toggle="modal" data-target="#closeVisitModalId" data-whatever="' + feedback['id'] + '">' +
+                    // 'Close' +
+                    // '</button>\n' +
+                    // '<button type="button" style="margin: 5px;" class="btn btn-primary" data-toggle="modal" data-target="#feedbackModalId" data-whatever="' + feedback['id'] + '">' +
+                    // 'Feedback' +
+                    // '</button>\n' +
+                    '  </div>\n' +
+                    '</div>';
+            });
+            $('#containerId').html('<br>' + restHtml);
         });
 }
 
