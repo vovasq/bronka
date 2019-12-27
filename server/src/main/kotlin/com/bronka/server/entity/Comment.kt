@@ -13,7 +13,7 @@ data class Comment(
         val creationTime: String,
         val text: String,
         val authorId: Long?,
-        val authorName: String,
+        val authorName: String?,
 
 //        @OneToOne(mappedBy = "comment",cascade = arrayOf(CascadeType.ALL)) //, fetch = FetchType.EAGER)
         @ManyToOne//(cascade = arrayOf(CascadeType.ALL)) //, fetch = FetchType.EAGER)

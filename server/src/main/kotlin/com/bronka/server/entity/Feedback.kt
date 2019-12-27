@@ -29,9 +29,9 @@ data class Feedback(
 }
 
 enum class Rate {
-    ONE_STARS,
-    TWO_STARS,
-    THREE_STARS,
-    FOUR_STARS,
-    FIVE_STARS
+    GREAT,
+    OK,
+    BAD,
+    SHEET,
+    EXCELLENT
 }

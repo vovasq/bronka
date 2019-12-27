@@ -2,18 +2,9 @@ package com.bronka.server.users
 
 import com.bronka.server.entity.*
 import com.bronka.server.repository.AllRepositories
-import com.bronka.server.repository.FeedbackRepositoryJpa
-import com.bronka.server.repository.RestaurantRepositoryJpa
-import com.bronka.server.repository.VisitRepositoryJpa
 import com.bronka.server.utils.getCurrentTime
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.context.ApplicationContext
-import org.springframework.context.annotation.AnnotationConfigApplicationContext
-import org.springframework.stereotype.Component
-import javax.annotation.PostConstruct
 
-class Client(val userAccount: UserAccount, val repos:AllRepositories) {
+class Client(val userAccount: UserAccount, val repos: AllRepositories) {
 
 
     fun createVisit(restName: String, bookingTime: String, numOfPersons: Int): Long? {
@@ -30,7 +21,7 @@ class Client(val userAccount: UserAccount, val repos:AllRepositories) {
     }
 
     fun cancelVisit(visitId: Long): Visit? {
-        var visitInRep = repos.visitsRepo.getOne(visitId)
+        val visitInRep = repos.visitsRepo.getOne(visitId)
         if (notClosedNotDeclined(visitInRep)) {
             visitInRep.state = VisitState.DECLINED
         } else {
@@ -40,7 +31,7 @@ class Client(val userAccount: UserAccount, val repos:AllRepositories) {
     }
 
     fun changeVisit(visit: Visit): Visit? {
-        var visitInRep = repos.visitsRepo.getOne(visit.id)
+        val visitInRep = repos.visitsRepo.getOne(visit.id)
         if (notClosedNotDeclined(visitInRep) && visitInRep != null) {
             visitInRep.bookingTime = visit.bookingTime
             visitInRep.numOfPersons = visit.numOfPersons
@@ -66,7 +57,7 @@ class Client(val userAccount: UserAccount, val repos:AllRepositories) {
             && visitInRep.state != VisitState.CLOSED
 
     private fun requestVisit(visit: Visit): Long? {
-        var result = repos.visitsRepo.save(visit)
+        val result = repos.visitsRepo.save(visit)
         return result.id
     }
 
@@ -82,13 +73,19 @@ class Client(val userAccount: UserAccount, val repos:AllRepositories) {
         TODO()
     }
 
+    private fun updateRestaurantRateAfterVisit(restName: String, rate: Rate) =
+            repos.restsRepo.save(repos.restsRepo.findByName(restName)[0])
+
     fun endVisit(visitId: Long, initialComment: Comment, rate: Rate,
-                 restaurantName: String, client: Client): Feedback {
-        var visit = repos.visitsRepo.getOne(visitId)
+                 restName: String, client: Client): Feedback {
+        val visit = repos.visitsRepo.getOne(visitId)
         visit.state = VisitState.END
         repos.visitsRepo.save(visit)
-        return repos.feedbackRepo.save(Feedback(null, initialComment, rate, restaurantName,
+        repos.commentRepository.save(initialComment)
+        updateRestaurantRateAfterVisit(restName, rate)
+        val feedback = repos.feedbackRepo.save(Feedback(null, initialComment, rate, restName,
                 client.userAccount.id!!, client.userAccount.name))
+        return feedback
     }
 
 }

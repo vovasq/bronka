@@ -31,9 +31,14 @@ class ClientService {
         return clientById(userId).changeVisit(visit)
     }
 
-    fun endVisit(userId: Long, visitId: Long, initialComment: Comment, rate: Rate,
-                 restaurantName: String, client: Client): Feedback {
-        return clientById(userId).endVisit(visitId, initialComment, rate, restaurantName, client)
+    fun endVisit(userId: Long, visitId: Long, initialComment: Comment, rate: Rate): Feedback {
+        val thisClient = clientById(userId)
+        return thisClient.endVisit(
+                visitId,
+                initialComment,
+                rate,
+                repos.visitsRepo.findById(visitId).get().restaurant,
+                thisClient)
     }
 
     fun getAllRestaurant(userId: Long): List<Restaurant> {

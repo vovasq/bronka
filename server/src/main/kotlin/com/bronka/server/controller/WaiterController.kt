@@ -17,34 +17,34 @@ class WaiterController {
     private lateinit var waiterService: WaiterService
 
     @GetMapping("/waiter")
-    fun waiterPage():String{
+    fun waiterPage(): String {
         return "waiter"
     }
 
     @GetMapping("/getrest")
     @ResponseBody
-    fun getMyInfo(@RequestParam(required = true) id:Long):Restaurant{
+    fun getMyInfo(@RequestParam(required = true) id: Long): Restaurant {
         return waiterService.getMyRestaurantName(id)
     }
 
 
     @GetMapping("/visits")
     @ResponseBody
-    fun getRestoVisits(@RequestParam(required = true) id:Long, @RequestParam(required = true) restaurantName: String):List<Visit>{
-        return waiterService.getVisits(id,restaurantName)
+    fun getRestoVisits(@RequestParam(required = true) id: Long, @RequestParam(required = true) restaurantName: String): List<Visit> {
+        return waiterService.getVisits(id, restaurantName)
     }
 
     @GetMapping("/approve")
     @ResponseBody
-    fun approveVisit(@RequestParam(required = true) waiterId:Long, @RequestParam(required = true) restaurantName: String, visitId:Long):String{
-        waiterService.approveVisit(waiterId,restaurantName,visitId)
+    fun approveVisit(@RequestParam(required = true) waiterId: Long, @RequestParam(required = true) restaurantName: String, visitId: Long): String {
+        waiterService.approveVisit(waiterId, restaurantName, visitId)
         return "Ok"
     }
 
     @GetMapping("/decline")
     @ResponseBody
-    fun declineVisit(@RequestParam(required = true) waiterId:Long, @RequestParam(required = true) restaurantName: String, visitId:Long, comment:String):String{
-        waiterService.declineVisit(waiterId,restaurantName,visitId, comment)
+    fun declineVisit(@RequestParam(required = true) waiterId: Long, @RequestParam(required = true) restaurantName: String, visitId: Long, comment: String): String {
+        waiterService.declineVisit(waiterId, restaurantName, visitId, comment)
         return "Ok"
     }
 

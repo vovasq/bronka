@@ -1,10 +1,9 @@
 package com.bronka.server.controller
 
-import com.bronka.server.entity.Restaurant
 import com.bronka.server.entity.UserAccount
-import com.bronka.server.repository.RestaurantRepositoryJpa
 import com.bronka.server.repository.UserRepositoryJpa
 import com.bronka.server.requests.LoginRequest
+import com.bronka.server.requests.SignUpRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -30,9 +29,9 @@ open class LoginController {
             |Cause I told them that we put that shit behind us but I— (hah)<br>""".trimMargin("|")
     }
 
-    @GetMapping("login")
+    @GetMapping("/login")
     fun getAccountInfo(request: LoginRequest): UserAccount? {
-        var result = userRepositoryJpa.findByEmail(request.email);
+        val result = userRepositoryJpa.findByEmail(request.email);
         if (result.isNotEmpty()) {
             if (result.get(0).password.equals(request.password))
                 return result.get(0)
@@ -40,9 +39,9 @@ open class LoginController {
         return null
     }
 
-    @PostMapping("signup")
+    @PostMapping("/signup")
     fun getAccountInfo(account: UserAccount): UserAccount? {
-        var result = userRepositoryJpa.findByEmail(account.email);
+        val result = userRepositoryJpa.findByEmail(account.email);
         if (result.isEmpty()) {
             return userRepositoryJpa.save(account)
         }

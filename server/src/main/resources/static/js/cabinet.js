@@ -37,14 +37,15 @@ $(document).ready(function () {
         modal.find('#feedbackModalTextId').text('Are leave feedback with id = ' + recipient + ' ?');
         $('#feedbackButtonId').click(function () {
             var data = {};
-            data['waiterId'] = readCookie('id');
-            data['restaurantName'] = readCookie('restaurantName');
+            data['userId'] = readCookie('id');
+            // data['restaurantName'] = readCookie('restaurantName');
             data['visitId'] = recipient;
-            data['comment'] = $('#commentId').val()
+            data['text'] = $('#commentId').val();
+            data['rate'] = $('#rateId').val();
             console.log(data);
             $.ajax({
-                method: "GET",
-                url: "/decline",
+                method: "POST",
+                url: "/close",
                 data: data
             }).done(function (msg) {
                 console.log("Response is =  " + msg);
